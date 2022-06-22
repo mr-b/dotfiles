@@ -38,8 +38,8 @@ output * bg /usr/share/backgrounds/default.png fill
 # Example configuration:
 #
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000' \
-         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         timeout 600 'swaylock -f -c 000000' \
+         timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          before-sleep 'swaylock -f -c 000000'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
@@ -215,6 +215,10 @@ bindsym $mod+r mode "resize"
 #         inactive_workspace #32323200 #32323200 #5c5c5c
 #     }
 # }
+
+exec_always --no-startup-id 'nm-applet --indicator'
+exec_always --no-startup-id 'blueman-applet'
+
  bar {
      swaybar_command waybar
    }
@@ -229,3 +233,24 @@ gaps inner 4
 gaps outer 4
 smart_gaps on
 
+bindsym Print            exec ~/.config/sway/swayshot/swayshot
+bindsym Mod1+Print       exec ~/.config/sway/swayshot/swayshot window
+bindsym Shift+Print      exec ~/.config/sway/swayshot/swayshot region
+bindsym Mod4+Print       exec ~/.config/sway/swayshot/swayshot/swayshot display upload
+bindsym Mod4+Mod1+Print  exec ~/.config/sway/swayshot/swayshot/swayshot window  upload
+bindsym Mod4+Shift+Print exec ~/.config/sway/swayshot/swayshot/swayshot region  upload
+
+# Volume control
+bindsym XF86AudioRaiseVolume exec "pw-volume change +2.5%; pkill -RTMIN+8 waybar"
+bindsym XF86AudioLowerVolume exec "pw-volume change -2.5%; pkill -RTMIN+8 waybar"
+bindsym XF86AudioMute exec "pw-volume mute toggle; pkill -RTMIN+8 waybar"
+
+# Workspaces
+
+workspace 1 output DP-3
+workspace 2 output DP-2
+workspace 3 output DP-2
+
+# Assign apps to workspace
+assign [app_id="firefox"] workspace number 2
+assign [app_id="google-chrome"] workspace number 2
